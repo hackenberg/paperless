@@ -27,12 +27,16 @@ def create_app(test_config=None):
     from . import db
     db.init_app(app)
 
-    from . import auth
-    app.register_blueprint(auth.bp)
-
     @app.route('/')
     def index():
         name = request.args.get('name', 'World')
         return f'Hello, {escape(name)}!'
+
+    from . import auth
+    app.register_blueprint(auth.bp)
+
+    from . import docs
+    app.register_blueprint(docs.bp)
+    app.add_url_rule('/', endpoint='index')
 
     return app
