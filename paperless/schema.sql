@@ -1,0 +1,17 @@
+DROP TABLE IF EXISTS document;
+DROP TABLE IF EXISTS account;
+
+CREATE TABLE account (
+  id       INTEGER PRIMARY KEY AUTOINCREMENT,
+  username TEXT NOT NULL UNIQUE,
+  password TEXT NOT NULL
+);
+
+CREATE TABLE document (
+  id         INTEGER   PRIMARY KEY AUTOINCREMENT,
+  title      TEXT      NOT NULL UNIQUE,
+  content    TEXT      NOT NULL,
+  account_id INTEGER   NOT NULL,
+  created    TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (account_id) REFERENCES account (id)
+);

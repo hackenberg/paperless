@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<title>{% block title %}{% endblock %}</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='bootstrap-v4.4.1/css/bootstrap.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+<div class="container">
+  <div class="row justify-content-between">
+    <span>PaperLess</span>
+    <ul class="nav">
+      {% if g.user %}
+        <li class="nav-item">
+          <span>{{ g.user['username'] }}</span>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{ url_for('auth.logout') }}">Log Out</a>
+        </li>
+      {% else %}
+        <li class="nav-item">
+          <a class="nav-link" href="{{ url_for('auth.login') }}">Log In</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{ url_for('auth.register') }}">Register</a>
+        </li>
+      {% endif %}
+    </ul>
+  </div>
+  <section class="content">
+    <header>
+      {% block header %}{% endblock %}
+    </header>
+    {% for message in get_flashed_messages() %}
+      <div class="alert alert-danger">{{ message }}</div>
+    {% endfor %}
+    {% block content %}{% endblock %}
+  </section>
+</div>
+<script src="{{ url_for('static', filename='jquery-v3.4.1/jquery-3.4.1.js') }}"></script>
+<script src="{{ url_for('static', filename='bootstrap-v4.4.1/js/bootstrap.js') }}"></script>
