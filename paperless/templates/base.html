@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <title>{% block title %}{% endblock %}</title>
-<link rel="stylesheet" href="{{ url_for('static', filename='bootstrap-v4.4.1/css/bootstrap.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='bootstrap/css/bootstrap.css') }}">
 <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 <div class="container">
   <div class="row justify-content-between">
@@ -33,5 +33,5 @@
     {% block content %}{% endblock %}
   </section>
 </div>
-<script src="{{ url_for('static', filename='jquery-v3.4.1/jquery-3.4.1.js') }}"></script>
-<script src="{{ url_for('static', filename='bootstrap-v4.4.1/js/bootstrap.js') }}"></script>
+<script src="{{ url_for('static', filename='jquery/jquery.js') }}"></script>
+<script src="{{ url_for('static', filename='bootstrap/js/bootstrap.js') }}"></script>
