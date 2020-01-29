@@ -1,0 +1,4 @@
+include paperless/schema.sql
+graft paperless/static
+graft paperless/templates
+global-exclude *.pyc
