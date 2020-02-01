@@ -58,6 +58,7 @@ def login():
         password = request.form['password']
         db = get_db()
         error = None
+        user = None
 
         if not username:
             error = 'Username is required.'

@@ -13,7 +13,7 @@ def init_app(app):
 @click.command('init-db')
 @with_appcontext
 def init_db_command():
-    '''Clear the existing data and create new schema.'''
+    """Clear the existing data and create new schema."""
     init_db()
     click.echo('Initialized the database.')
 

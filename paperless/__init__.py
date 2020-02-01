@@ -4,7 +4,7 @@ from flask import Flask, escape, request
 
 
 def create_app(test_config=None):
-    '''Application Factory'''
+    """Application Factory"""
     app = Flask(__name__, instance_relative_config=True)
     app.config.from_mapping(
         SECRET_KEY='dev',
