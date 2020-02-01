@@ -4,6 +4,13 @@
   <h1>{% block title %}Documents{% endblock %}</h1>
   {% if g.user %}
     <a class="btn btn-primary" href="{{ url_for('docs.create') }}">New</a>
+    <form method="post">
+      <div class="form-group">
+        <label for="upload">Upload</label>
+        <input type="file" class="form-control-file" id="upload">
+      </div>
+      <button type="submit" class="btn btn-secondary">Submit</button>
+    </form>
   {% endif %}
 {% endblock %}
 
@@ -15,8 +22,9 @@
           <h1>{{ doc['title'] }}</h1>
           <div>by {{ doc['username'] }} on {{ doc['created'].strftime('%Y-%m-%d') }}</div>
         </div>
+        <a href="{{ url_for('docs.view', id=doc['id']) }}">View</a>
         {% if g.user['id'] == doc['account_id'] %}
-          <a href="{{ url_for('docs.update', id=doc['id']) }}">Edit</a>
+          | <a href="{{ url_for('docs.update', id=doc['id']) }}">Edit</a>
         {% endif %}
       </header>
       <p>{{ doc['content'] }}</p>

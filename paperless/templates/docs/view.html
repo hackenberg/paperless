@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}{{ doc['title'] }}{% endblock %}</h1>
+  <hr>
+{% endblock %}
+
+{% block content %}
+  <p>{{ doc['content'] }}</p>
+{% endblock %}

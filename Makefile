@@ -12,7 +12,7 @@ JQUERY := https://code.jquery.com/jquery-3.4.1
 BOOTSTRAP := https://github.com/twbs/bootstrap/releases/download/v4.4.1/bootstrap-4.4.1-dist.zip
 
 lint:
-	flake8 paperless/*.py
+	flake8 paperless/*.py tests/*.py
 
 run: $(VENV) instance/dev.sqlite instance/jquery instance/bootstrap
 	$(FLASK) run
@@ -42,11 +42,11 @@ instance/bootstrap-4.4.1-dist.zip:
 
 clean:
 	rm -rf \
+		build/ \
 		instance/bootstrap/ \
 		paperless/static/{bootstrap,jquery}/ \
 		paperless/__pycache__/ \
 		tests/__pycache__/ \
-		venv/ \
 		*.egg-info
 
 .PHONY: clean

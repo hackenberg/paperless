@@ -2,27 +2,23 @@
 <title>{% block title %}{% endblock %}</title>
 <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap/css/bootstrap.css') }}">
 <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+<div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
+  <h5 class="mr-md-auto font-weight-normal">PaperLess</h5>
+  {% if g.user %}
+    <nav class="mr-md-3">
+      <a class="p-2 text-dark" href="{{ url_for('docs.index') }}">Docs</a>
+      <span class="p-2">{{ g.user['username'] }}</span>
+    </nav>
+    <a class="btn btn-outline-primary" href="{{ url_for('auth.logout') }}">Log Out</a>
+  {% else %}
+    <nav class="mr-md-3">
+      <a class="p-2 text-dark" href="{{ url_for('docs.index') }}">Docs</a>
+      <a class="p-2 text-dark" href="{{ url_for('auth.register') }}">Register</a>
+    </nav>
+    <a class="btn btn-outline-primary" href="{{ url_for('auth.login') }}">Log In</a>
+  {% endif %}
+</div>
 <div class="container">
-  <div class="row justify-content-between">
-    <span>PaperLess</span>
-    <ul class="nav">
-      {% if g.user %}
-        <li class="nav-item">
-          <span>{{ g.user['username'] }}</span>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="{{ url_for('auth.logout') }}">Log Out</a>
-        </li>
-      {% else %}
-        <li class="nav-item">
-          <a class="nav-link" href="{{ url_for('auth.login') }}">Log In</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="{{ url_for('auth.register') }}">Register</a>
-        </li>
-      {% endif %}
-    </ul>
-  </div>
   <section class="content">
     <header>
       {% block header %}{% endblock %}

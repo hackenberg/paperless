@@ -19,6 +19,12 @@ def index():
     return render_template('docs/index.html', docs=docs)
 
 
+@bp.route('/<int:id>/view')
+def view(id):
+    doc = get_doc(id, check_author=False)
+    return render_template('docs/view.html', doc=doc)
+
+
 @bp.route('/create', methods=('GET', 'POST'))
 @login_required
 def create():
