@@ -52,6 +52,36 @@ def create():
     return render_template('docs/create.html')
 
 
+@bp.route('/upload', methods=('POST',))
+@login_required
+def upload():
+    if 'file' not in request.files:
+        flash('No file part')
+        return redirect(url_for('docs.index'))
+
+    file = request.files['file']
+
+    # If the user does not select a file, browsers sometimes
+    # submit an empty part without a file name.
+    if file.filename == '':
+        flash('No file selected')
+        return redirect(url_for('docs.index'))
+
+    if file:
+        title = file.filename
+        content = file.read()
+        db = get_db()
+        query = '''
+            INSERT INTO document (title, content, account_id)
+            VALUES (?, ?, ?)
+            '''
+        params = (title, content, g.user['id'])
+        db.execute(query, params)
+        db.commit()
+
+    return redirect(url_for('docs.index'))
+
+
 @bp.route('/<int:id>/update', methods=('GET', 'POST'))
 @login_required
 def update(id):
