@@ -1,9 +1,5 @@
 import pytest
 
-from flask import g, session
-
-from paperless.db import get_db
-
 
 def test_index(client, app):
     url = '/search/'
