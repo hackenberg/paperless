@@ -22,7 +22,8 @@ def index():
 @bp.route('/<int:id>/view')
 def view(id):
     doc = get_doc(id, check_author=False)
-    return render_template('docs/view.html', doc=doc)
+    file_size = len(doc['content'])
+    return render_template('docs/view.html', doc=doc, file_size=file_size)
 
 
 @bp.route('/create', methods=('GET', 'POST'))
@@ -69,7 +70,7 @@ def upload():
 
     if file:
         title = file.filename
-        content = file.read()
+        content = file.read().decode('UTF-8')
         db = get_db()
         query = '''
             INSERT INTO document (title, content, account_id)

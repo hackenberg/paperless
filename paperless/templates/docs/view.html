@@ -2,9 +2,31 @@
 
 {% block header %}
   <h1>{% block title %}{{ doc['title'] }}{% endblock %}</h1>
-  <hr>
 {% endblock %}
 
 {% block content %}
-  <p>{{ doc['content'] }}</p>
+  <div class="card">
+    <div class="card-header d-flex flex-column flex-md-row justify-content-between">
+      <div class="text-monospace">{{ file_size }} Bytes</div>
+      <form action="{{ url_for('docs.delete', id=doc['id']) }}" method="post">
+        <div class="btn-group btn-group-sm btn-group-toggle" data-toggle="buttons">
+          <button type="button" class="btn btn-outline-secondary active">Raw</button>
+          <button type="button" class="btn btn-outline-secondary">Markdown</button>
+        </div>
+        {% if g.user['id'] == doc['account_id'] %}
+          <a class="btn btn-sm btn-outline-primary" href="{{ url_for('docs.update', id=doc['id']) }}">Edit</a>
+          <button
+            type="submit"
+            class="btn btn-sm btn-outline-danger"
+            onclick="return confirm('Are you sure?');"
+          >
+            Delete
+          </button>
+        {% endif %}
+      </form>
+    </div>
+    <div class="card-body">
+      <p class="card-text">{{ doc['content'] }}</p>
+    </div>
+  </div>
 {% endblock %}

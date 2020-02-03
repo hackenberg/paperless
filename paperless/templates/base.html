@@ -1,7 +1,13 @@
 <!DOCTYPE html>
+
 <title>{% block title %}{% endblock %}</title>
 
-<link rel="stylesheet" href="{{ url_for('static', filename='bootstrap/css/bootstrap.css') }}">
+{% if config.env == 'development' %}
+<link rel="stylesheet" href="{{ url_for('static', filename='lib/bootstrap/css/bootstrap.css') }}">
+{% else %}
+<link rel="stylesheet" href="{{ url_for('static', filename='lib/bootstrap/css/bootstrap.min.css') }}">
+{% endif %}
+
 <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 
 <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
@@ -25,6 +31,7 @@
   <section class="content">
     <header>
       {% block header %}{% endblock %}
+      <hr>
     </header>
     {% for message in get_flashed_messages() %}
       <div class="alert alert-danger">{{ message }}</div>
@@ -33,5 +40,10 @@
   </section>
 </div>
 
-<script src="{{ url_for('static', filename='lib/jquery/jquery.js') }}"></script>
-<script src="{{ url_for('static', filename='lib/bootstrap/js/bootstrap.js') }}"></script>
+{% if config.env == 'development' %}
+  <script src="{{ url_for('static', filename='lib/jquery/jquery.js') }}"></script>
+  <script src="{{ url_for('static', filename='lib/bootstrap/js/bootstrap.js') }}"></script>
+{% else %}
+  <script src="{{ url_for('static', filename='lib/jquery/jquery.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='lib/bootstrap/js/bootstrap.min.js') }}"></script>
+{% endif %}
