@@ -12,7 +12,7 @@
   <div class="row mb-2 border-bottom">
     <div class="col-md-6">
       <div class="col p-4 d-flex flex-column position-static">
-        <form action="#" method="post">
+        <form action="{{ url_for('search.index') }}" method="post">
           <div class="form-group">
             <label for="search">Search</label>
             <input type="text" class="form-control" id="search" name="search">

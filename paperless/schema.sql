@@ -1,5 +1,10 @@
+DROP TRIGGER IF EXISTS t_search_ins;
+DROP TRIGGER IF EXISTS t_search_upd;
+DROP TRIGGER IF EXISTS t_search_del;
+
 DROP TABLE IF EXISTS document;
 DROP TABLE IF EXISTS account;
+DROP TABLE IF EXISTS search;
 
 CREATE TABLE account (
   id       INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -13,5 +18,34 @@ CREATE TABLE document (
   content    TEXT      NOT NULL,
   account_id INTEGER   NOT NULL,
   created    TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  FOREIGN KEY (account_id) REFERENCES account (id)
+  FOREIGN KEY (account_id) REFERENCES account (id) ON DELETE CASCADE
 );
+
+CREATE VIRTUAL TABLE search
+USING FTS5 (id, title, content);
+
+CREATE TRIGGER t_search_ins
+  AFTER INSERT
+  ON document
+BEGIN
+  INSERT INTO search (id, title, content)
+  VALUES (NEW.id, NEW.title, NEW.content);
+END;
+
+CREATE TRIGGER t_search_upd
+  AFTER UPDATE
+  ON document
+BEGIN
+  UPDATE search SET
+    title = NEW.title,
+    content = NEW.content
+  WHERE id = OLD.id;
+END;
+
+CREATE TRIGGER t_search_del
+  AFTER DELETE
+  ON document
+BEGIN
+  DELETE FROM search
+  WHERE id = OLD.id;
+END;

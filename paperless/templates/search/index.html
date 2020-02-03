@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}Search{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+  <form action="{{ url_for('search.index') }}" method="post">
+    <div class="form-group">
+      <label for="search">Search</label>
+      <input
+        type="text"
+        class="form-control"
+        id="search"
+        name="search"
+        value="{{ request.form['search'] }}"
+        required>
+    </div>
+    <button type="submit" class="btn btn-secondary">Search</button>
+  </form>
+  {% for r in result %}
+    <div class="card mt-3">
+      <div class="card-header">
+        <a class="text-dark" href="{{ url_for('docs.view', id=r['id']) }}">
+          {{ r['title'] }}
+        </a>
+      </div>
+      <div class="card-body">
+        <span>{{ r['content'] }}</span>
+      </div>
+    </div>
+  {% endfor %}
+{% endblock %}
