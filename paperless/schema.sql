@@ -22,14 +22,14 @@ CREATE TABLE document (
 );
 
 CREATE VIRTUAL TABLE search
-USING FTS5 (id, title, content);
+USING FTS5 (title, content, id UNINDEXED);
 
 CREATE TRIGGER t_search_ins
   AFTER INSERT
   ON document
 BEGIN
-  INSERT INTO search (id, title, content)
-  VALUES (NEW.id, NEW.title, NEW.content);
+  INSERT INTO search (title, content, id)
+  VALUES (NEW.title, NEW.content, NEW.id);
 END;
 
 CREATE TRIGGER t_search_upd
